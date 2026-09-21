@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PatchPlus — Understand. Secure. Ship.</title>
+    <meta name="description" content="PatchPlus is a local-first software engineering platform for understanding application architecture and identifying security, reliability, and operational gaps before deployment.">
+
+    <style>
+         :root {
+            --bg: #07111f;
+            --panel: #0d1a2b;
+            --panel2: #101f33;
+            --text: #eef5ff;
+            --muted: #9fb0c5;
+            --line: #20334a;
+            --accent: #6ee7b7;
+            --accent2: #60a5fa;
+            --max: 1100px;
+        }
+        
+        * {
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            margin: 0;
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: radial-gradient( circle at 80% 10%, #12365a 0, transparent 32%), var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+        
+        .wrap {
+            width: min(92%, var(--max));
+            margin: auto;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0 6px;
+            border-bottom: 1px solid rgba(255, 255, 255, .07);
+        }
+        
+        .logo {
+            font-family: "Algerian", "Algerian MT", serif;
+            font-size: 32px;
+            font-weight: 400;
+            letter-spacing: .5px;
+        }
+        
+        .logo span {
+            color: var(--accent);
+        }
+        
+        .navlinks {
+            display: flex;
+            gap: 24px;
+            color: var(--muted);
+            font-size: 14px;
+        }
+        
+        .hero {
+            padding: 80px 0 120px;
+            max-width: none;
+            display: grid;
+            grid-template-columns: 1.05fr .95fr;
+            align-items: center;
+            gap: 55px;
+        }
+        
+        .hero-content {
+            min-width: 0;
+        }
+        
+        .hero-image {
+            width: 100%;
+            max-width: 560px;
+            justify-self: end;
+            transform: translateX(50px);
+            border-radius: 18px;
+            display: block;
+        }
+        
+        .eyebrow {
+            display: inline-block;
+            padding: 7px 12px;
+            border: 1px solid #23415c;
+            border-radius: 999px;
+            color: var(--accent);
+            font-size: 13px;
+            margin-bottom: 20px;
+            background: rgba(110, 231, 183, .06);
+        }
+        
+        h1 {
+            font-size: clamp(44px, 7vw, 78px);
+            line-height: 1.02;
+            letter-spacing: -3px;
+            margin: 0 0 25px;
+        }
+        
+        .gradient {
+            background: linear-gradient( 100deg, var(--text), #9bc7ff 55%, var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .hero p {
+            font-size: 20px;
+            color: var(--muted);
+            max-width: 760px;
+            margin: 0 0 34px;
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 13px 19px;
+            border-radius: 10px;
+            font-weight: 700;
+            border: 1px solid var(--line);
+        }
+        
+        .primary {
+            background: var(--accent);
+            color: #062018;
+            border-color: var(--accent);
+        }
+        
+        .secondary {
+            background: rgba(255, 255, 255, .03);
+        }
+        
+        section {
+            padding: 75px 0;
+        }
+        
+        .section-title {
+            font-size: 34px;
+            letter-spacing: -1px;
+            margin: 0 0 12px;
+        }
+        
+        .lifecycle-intro .section-lead {
+            color: var(--muted);
+            max-width: 900px;
+            margin: 0 auto 35px;
+            text-align: center;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+        
+        .card {
+            background: linear-gradient( 180deg, rgba(16, 31, 51, .9), rgba(13, 26, 43, .9));
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            padding: 25px;
+        }
+        
+        .icon {
+            font-size: 25px;
+            margin-bottom: 12px;
+        }
+        
+        .card h3 {
+            margin: 0 0 8px;
+            font-size: 19px;
+        }
+        
+        .card p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 15px;
+        }
+        
+        .flow {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            margin-top: 30px;
+        }
+        
+        .step {
+            border: 1px solid var(--line);
+            background: rgba(255, 255, 255, .025);
+            padding: 20px 15px;
+            border-radius: 12px;
+            text-align: center;
+        }
+        
+        .num {
+            color: var(--accent2);
+            font-weight: 800;
+            font-size: 13px;
+        }
+        
+        .step strong {
+            display: block;
+            margin-top: 8px;
+            font-size: 14px;
+        }
+        
+        .privacy {
+            border: 1px solid #275043;
+            background: linear-gradient( 120deg, rgba(110, 231, 183, .09), rgba(96, 165, 250, .06));
+            border-radius: 18px;
+            padding: 35px;
+        }
+        
+        .privacy h2 {
+            margin-top: 0;
+        }
+        
+        .privacy p {
+            color: var(--muted);
+            max-width: 800px;
+        }
+        
+        .cta {
+            text-align: center;
+            padding-bottom: 100px;
+        }
+        
+        .hero-divider {
+            width: 100%;
+            height: 1px;
+            background: rgba(96, 165, 250, 0.35);
+            margin: 10px 0 20px;
+        }
+        /* =========================================================
+           PATCHPLUS — COMPLETE LIVE LIFECYCLE
+        ========================================================= */
+        
+        .lifecycle {
+            padding: 90px 0 20px;
+        }
+        
+        .lifecycle-intro {
+            max-width: 1000px;
+            margin: 20px auto 42px;
+            text-align: center;
+        }
+        
+        .pp-flow {
+            position: relative;
+            width: 100%;
+            min-height: 940px;
+            overflow: hidden;
+            border: 1px solid rgba(96, 165, 250, .12);
+            border-radius: 24px;
+            padding: 48px 30px 58px;
+            background: radial-gradient(circle at 50% 35%, rgba(20, 100, 180, .09), transparent 40%), radial-gradient(circle at 50% 88%, rgba(110, 80, 255, .07), transparent 35%), rgba(3, 12, 24, .48);
+            text-align: center;
+        }
+        
+        .pp-flow::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(rgba(96, 165, 250, .025) 1px, transparent 1px), linear-gradient(90deg, rgba(96, 165, 250, .025) 1px, transparent 1px);
+            background-size: 36px 36px;
+            pointer-events: none;
+            text-align: center;
+        }
+        
+        .pp-flow-svg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+            overflow: visible;
+        }
+        
+        .pp-base-path {
+            fill: none;
+            stroke: rgba(86, 145, 205, .25);
+            stroke-width: 1.4;
+        }
+        
+        .pp-live-path {
+            fill: none;
+            stroke: rgba(57, 181, 255, .82);
+            stroke-width: 1.6;
+            stroke-linecap: round;
+            stroke-dasharray: 2 16;
+            animation: ppDash 1.35s linear infinite;
+            filter: drop-shadow(0 0 4px rgba(40, 180, 255, .65));
+        }
+        
+        .pp-live-green {
+            stroke: rgba(22, 240, 192, .9);
+            filter: drop-shadow(0 0 5px rgba(22, 240, 192, .65));
+        }
+        
+        .pp-live-red {
+            stroke: rgba(255, 91, 120, .92);
+            filter: drop-shadow(0 0 5px rgba(255, 91, 120, .65));
+        }
+        
+        .pp-live-purple {
+            stroke: rgba(145, 125, 255, .9);
+            filter: drop-shadow(0 0 5px rgba(145, 125, 255, .65));
+        }
+        
+        @keyframes ppDash {
+            to {
+                stroke-dashoffset: -36;
+            }
+        }
+        
+        .pp-flow-particle {
+            fill: #baf7ff;
+            filter: drop-shadow(0 0 6px #32dfff);
+        }
+        
+        .pp-flow-particle.green {
+            fill: #8affdf;
+            filter: drop-shadow(0 0 6px #16f0c0);
+        }
+        
+        .pp-flow-particle.red {
+            fill: #ff9caf;
+            filter: drop-shadow(0 0 6px #ff5577);
+        }
+        
+        .pp-flow-particle.purple {
+            fill: #c1b8ff;
+            filter: drop-shadow(0 0 6px #8c7cff);
+        }
+        
+        .pp-node {
+            position: absolute;
+            z-index: 10;
+            width: 178px;
+            min-height: 116px;
+            padding: 16px 14px;
+            border-radius: 14px;
+            border: 1px solid rgba(38, 147, 240, .55);
+            background: linear-gradient(145deg, rgba(10, 31, 55, .97), rgba(5, 19, 36, .96));
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, .035), 0 12px 32px rgba(0, 0, 0, .25);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            cursor: pointer;
+            transition: transform .28s cubic-bezier(.2, .8, .2, 1), border-color .25s ease, box-shadow .25s ease, background .25s ease;
+        }
+        
+        .pp-node:hover {
+            transform: scale(1.12);
+            z-index: 50;
+            border-color: rgba(60, 205, 255, .95);
+            background: linear-gradient(145deg, rgba(15, 43, 74, .99), rgba(6, 23, 44, .99));
+            box-shadow: 0 22px 55px rgba(0, 0, 0, .6), 0 0 32px rgba(20, 155, 255, .15), inset 0 1px 0 rgba(255, 255, 255, .08);
+        }
+        
+        .pp-icon {
+            width: 36px;
+            height: 36px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            color: #5ec0ff;
+            background: rgba(35, 135, 220, .08);
+            transition: transform .25s ease, background .25s ease;
+        }
+        
+        .pp-node:hover .pp-icon {
+            transform: scale(1.1);
+            background: rgba(35, 170, 255, .14);
+        }
+        
+        .pp-icon svg {
+            width: 24px;
+            height: 24px;
+        }
+        
+        .pp-node-title {
+            font-size: 14px;
+            font-weight: 750;
+            line-height: 1.2;
+        }
+        
+        .pp-node-subtitle {
+            margin-top: 5px;
+            color: #91a8bf;
+            font-size: 11px;
+            line-height: 1.4;
+        }
+        
+        .pp-node-description {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            margin-top: 0;
+            color: #b8cce0;
+            font-size: 10px;
+            line-height: 1.45;
+            transition: max-height .3s ease, opacity .25s ease, margin .25s ease;
+        }
+        
+        .pp-node:hover .pp-node-description {
+            max-height: 70px;
+            opacity: 1;
+            margin-top: 8px;
+        }
+        /* Top row: 1 → 2 → 3 */
+        
+        .pp-n1 {
+            left: 8%;
+            top: 52px;
+        }
+        
+        .pp-n2 {
+            left: 40%;
+            top: 52px;
+        }
+        
+        .pp-n3 {
+            right: 10%;
+            top: 52px;
+        }
+        /* PatchPlus #1 */
+        
+        .pp-patch1 {
+            position: absolute;
+            z-index: 12;
+            left: 50%;
+            top: 218px;
+            transform: translateX(-50%);
+            width: 370px;
+            min-height: 164px;
+            padding: 30px 20px 17px;
+            border-radius: 17px;
+            border: 1px solid rgba(22, 240, 192, .82);
+            background: radial-gradient(circle at 50% 0%, rgba(20, 255, 200, .13), transparent 68%), rgba(4, 48, 48, .9);
+            box-shadow: 0 0 40px rgba(15, 240, 190, .09), inset 0 0 35px rgba(20, 220, 170, .035);
+            text-align: center;
+            transition: transform .28s ease, box-shadow .28s ease;
+        }
+        
+        .pp-patch1:hover {
+            transform: translateX(-50%) scale(1.035);
+            box-shadow: 0 0 60px rgba(15, 240, 190, .18), inset 0 0 35px rgba(20, 220, 170, .05);
+        }
+        
+        .pp-stage-label {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 7px 25px;
+            border-radius: 999px;
+            background: linear-gradient(90deg, #14dbb5, #2bf1c4);
+            color: #04241f;
+            font-size: 10px;
+            font-weight: 850;
+            letter-spacing: 2px;
+            white-space: nowrap;
+        }
+        
+        .pp-patch1-title {
+            color: var(--accent);
+            font-size: 18px;
+            font-weight: 800;
+        }
+        
+        .pp-patch1-subtitle {
+            color: #67f4d5;
+            font-size: 12px;
+            margin-top: 2px;
+        }
+        
+        .pp-patch1-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4px 22px;
+            margin: 11px auto 0;
+            width: fit-content;
+            text-align: left;
+            font-size: 10px;
+        }
+        
+        .pp-patch1-list div::before {
+            content: "✓";
+            color: var(--accent);
+            font-weight: 900;
+            margin-right: 6px;
+        }
+        /* Row 3: 5 → 6 → 7 → Error */
+        
+        .pp-n5 {
+            left: 8%;
+            top: 470px;
+        }
+        
+        .pp-n6 {
+            left: 40%;
+            top: 470px;
+        }
+        
+        .pp-n7 {
+            right: 10%;
+            top: 470px;
+        }
+        
+        .pp-error {
+            position: absolute;
+            z-index: 11;
+            right: 10%;
+            top: 690px;
+            width: 205px;
+            min-height: 116px;
+            padding: 15px;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 78, 112, .78);
+            background: linear-gradient(145deg, rgba(61, 18, 32, .97), rgba(33, 10, 21, .97));
+            box-shadow: 0 0 30px rgba(255, 60, 100, .07);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .pp-error-icon {
+            width: 35px;
+            flex-shrink: 0;
+            color: #ff6682;
+        }
+        
+        .pp-error-title {
+            color: #ff6b84;
+            font-size: 13px;
+            font-weight: 800;
+        }
+        
+        .pp-error-text {
+            color: #c9aab3;
+            font-size: 10px;
+            line-height: 1.45;
+            margin-top: 5px;
+        }
+        /* Runtime */
+        
+        .pp-runtime {
+            position: absolute;
+            z-index: 10;
+            left: 8%;
+            top: 665px;
+            width: 55%;
+            min-height: 195px;
+            padding: 34px 15px 15px;
+            border-radius: 17px;
+            border: 1px solid rgba(137, 117, 255, .82);
+            background: radial-gradient(circle at 50% 0%, rgba(110, 95, 255, .13), transparent 60%), rgba(18, 16, 52, .86);
+            box-shadow: 0 0 38px rgba(100, 80, 255, .08);
+        }
+        
+        .pp-runtime .pp-stage-label {
+            background: linear-gradient(90deg, #7567ea, #927fff);
+            color: #0a091d;
+        }
+        
+        .pp-runtime-title {
+            text-align: center;
+            color: #b1a7ff;
+            font-size: 18px;
+            font-weight: 800;
+        }
+        
+        .pp-runtime-subtitle {
+            max-width: 700px;
+            margin: 5px auto 15px;
+            text-align: center;
+            color: #9d9bbd;
+            font-size: 11px;
+        }
+        
+        .pp-runtime-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        
+        .pp-runtime-card {
+            min-height: 100px;
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid rgba(100, 110, 210, .32);
+            background: rgba(7, 12, 35, .85);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: transform .25s ease, border-color .25s ease;
+        }
+        
+        .pp-runtime-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(145, 130, 255, .78);
+        }
+        
+        .pp-runtime-icon {
+            width: 40px;
+            flex-shrink: 0;
+            color: #35dcff;
+        }
+        
+        .pp-runtime-title {
+            font-size: 13px;
+            font-weight: 800;
+        }
+        
+        .pp-runtime-text {
+            margin-top: 5px;
+            color: #99a7c4;
+            font-size: 10px;
+            line-height: 1.4;
+        }
+        
+        .pp-continue-icon {
+            width: 35px;
+            flex-shrink: 0;
+            color: var(--accent);
+        }
+        
+        .pp-continue-title {
+            color: var(--accent);
+            font-size: 13px;
+            font-weight: 800;
+        }
+        
+        .pp-continue-text {
+            color: #a9cfc5;
+            font-size: 10px;
+            line-height: 1.45;
+            margin-top: 5px;
+        }
+        
+        .pp-flow-footer {
+            position: absolute;
+            bottom: 23px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            color: #7892b0;
+            font-size: 10px;
+            letter-spacing: 4px;
+        }
+        
+        @media (max-width: 900px) {
+            .pp-flow {
+                min-width: 920px;
+            }
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            .pp-live-path {
+                animation: none;
+            }
+        }
+        
+        footer {
+            border-top: 1px solid rgba(255, 255, 255, .07);
+            padding: 28px 0;
+            color: var(--muted);
+            font-size: 13px;
+        }
+        
+        @media(max-width:800px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            .flow {
+                grid-template-columns: 1fr 1fr;
+            }
+            .navlinks {
+                display: none;
+            }
+            .hero {
+                padding-top: 65px;
+                grid-template-columns: 1fr;
+                gap: 35px;
+            }
+            .hero-image {
+                justify-self: center;
+                max-width: 600px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="wrap">
+
+        <nav>
+
+            <div class="logo">
+                Patch <span>Plus</span>
+            </div>
+
+            <div class="navlinks">
+                <a href="#how">Why PatchPlus</a>
+                <a href="#privacy">Architecture</a>
+                <a href="#contact">Contact</a>
+            </div>
+
+        </nav>
+
+        <main>
+
+            <section class="hero">
+
+                <div class="hero-content">
+
+                    <div class="eyebrow">
+                        Software architecture & security • Early-stage prototype
+                    </div>
+
+                    <h1>
+                        Build it. Understand it.<br>
+                        <span class="gradient">
+                            Harden it.<br>
+                            Ship it.
+                        </span>
+                    </h1>
+
+                    <p>
+                        PatchPlus is a local-first software engineering platform that analyzes an application's codebase and architecture, identifies potential security, reliability and operational gaps, and helps developers generate and validate improvements before deployment.
+                    </p>
+
+                    <div class="buttons">
+
+                        <a class="btn primary" href="#contact">
+                            Join the early access
+                        </a>
+
+                        <a class="btn secondary" href="#how">
+                            See how it works
+                        </a>
+
+                    </div>
+
+                </div>
+
+                <img class="hero-image" src="code1.png" alt="Code editor illustration">
+
+            </section>
+
+            <div class="hero-divider"></div>
+
+            <section id="lifecycle" class="lifecycle">
+
+                <div class="lifecycle-intro">
+                    <div class="eyebrow">THE PATCHPLUS APPROACH</div>
+
+                    <h2 class="section-title">
+                        Understand it. Strengthen it. Keep it healthy.
+
+                    </h2>
+
+                    <p class="section-lead">
+                        PatchPlus analyzes your application to uncover security, reliability, and operational gaps, helps generate and validate improvements before deployment, then continues to monitor, diagnose, and repair issues at runtime.
+                    </p>
+
+                    <h2 class="section-title">
+                        One application. Continuous improvement.
+
+                    </h2>
+
+                    <p class="section-lead">
+                        That gives you the full idea in just a few lines:
+                        <span>understanding → pre-deployment hardening → runtime diagnosis → repair.</span>
+                    </p>
+
+                </div>
+
+                <div class="pp-flow">
+
+                    <!-- LIVE CONNECTIONS -->
+                    <svg class="pp-flow-svg" viewBox="0 0 1000 940" preserveAspectRatio="none">
+
+                        <defs>
+                            <marker id="ppArrowBlue" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+                                <path d="M0,0 L7,3 L0,6 Z" fill="#38b9ff"/>
+                            </marker>
+
+                            <marker id="ppArrowGreen" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+                                <path d="M0,0 L7,3 L0,6 Z" fill="#18e8bd"/>
+                            </marker>
+
+                            <marker id="ppArrowRed" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+                                <path d="M0,0 L7,3 L0,6 Z" fill="#ff607e"/>
+                            </marker>
+
+                            <marker id="ppArrowPurple" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+                                <path d="M0,0 L7,3 L0,6 Z" fill="#9b8aff"/>
+                            </marker>
+                        </defs>
+
+                        <!-- 1 → 2 -->
+                        <path class="pp-base-path" d="M207 110 L395 110"/>
+                        <path class="pp-live-path" marker-end="url(#ppArrowBlue)" d="M207 110 L395 110"/>
+
+                        <!-- 2 → 3 -->
+                        <path class="pp-base-path" d="M565 110 L732 110"/>
+                        <path class="pp-live-path" marker-end="url(#ppArrowBlue)" d="M565 110 L732 110"/>
+
+                        <!-- 3 → 4 : smooth curve -->
+                        <path
+                            class="pp-base-path"
+                            d="M 890 110
+                              C 950 110, 980 190, 930 250
+                              C 900 280, 850 300, 682 310"
+                        />
+
+                        <path
+                            class="pp-live-path pp-live-green"
+                            marker-end="url(#ppArrowGreen)"
+                            d="M 890 110
+                              C 950 110, 980 190, 930 250
+                              C 900 280, 850 300, 682 310"
+                        />
+
+                        <!-- 4 → 5 : exits PatchPlus from LEFT and enters Test from RIGHT -->
+                        <path class="pp-base-path" d="M332 310 C50 340 3 450 70 530 "/>
+                        <path class="pp-live-path pp-live-green" marker-end="url(#ppArrowGreen)" d="M332 310 C50 340 3 450 70 530"/>
+
+                        <!-- 5 → 6 -->
+                        <path class="pp-base-path" d="M207 528 L395 528"/>
+                        <path class="pp-live-path" marker-end="url(#ppArrowBlue)" d="M207 528 L395 528"/>
+
+                        <!-- 6 → 7 -->
+                        <path class="pp-base-path" d="M565 528 L732 528"/>
+                        <path class="pp-live-path" marker-end="url(#ppArrowBlue)" d="M565 528 L732 528"/>
+
+                        <!-- 7 → ERROR -->
+                        <path class="pp-base-path" d=" M 890 528 C 930 535,970 555,985 590 C 1000 655,975 685,945 715 C 925 733,905 740,902 741"/>
+                        <path class="pp-live-path pp-live-red" marker-end="url(#ppArrowRed)" d="M 890 528 C 930 535,970 555,985 590 C 1000 655,975 685,945 715 C 925 733,905 740,902 741"/>
+                        <!-- ERROR → 8 : straight line -->
+
+                        <path
+                            class="pp-base-path"
+                            d="M 870 742 L 635 742"
+                        />
+
+                        <path
+                            class="pp-live-path"
+                            marker-end="url(#ppArrowBlue)"
+                            d="M 870 742 L 635 742"
+                        />
+
+                        <!-- flowing particles -->
+                        <circle r="3" class="pp-flow-particle">
+                            <animateMotion dur="1.9s" repeatCount="indefinite" path="M207 110 L393 110"/>
+                        </circle>
+
+                        <circle r="3" class="pp-flow-particle">
+                            <animateMotion dur="1.9s" begin=".4s" repeatCount="indefinite" path="M565 110 L732 110"/>
+                        </circle>
+
+                        <circle r="3" class="pp-flow-particle green">
+                            <animateMotion dur="2.7s" repeatCount="indefinite" path="M 890 110
+                              C 950 110, 980 190, 930 250
+                              C 900 280, 850 300, 682 310"/>
+                        </circle>
+
+                        <circle r="3" class="pp-flow-particle green">
+                            <animateMotion dur="2.6s" repeatCount="indefinite" path="M332 310 C50 340 3 450 70 530"/>
+                        </circle>
+
+                        <circle r="3" class="pp-flow-particle">
+                            <animateMotion dur="1.9s" repeatCount="indefinite" path="M207 528 L395 528"/>
+                        </circle>
+
+                        <circle r="3" class="pp-flow-particle">
+                            <animateMotion dur="1.9s" begin=".5s" repeatCount="indefinite" path="M565 528 L732 528"/>
+                        </circle>
+
+                        <circle r="3" class="pp-flow-particle red">
+                            <animateMotion dur="1.8s" repeatCount="indefinite" path="M 890 528 C 930 535,970 555,985 590 C 1000 655,975 685,945 715 C 925 727,905 740,897 745"/>
+                        </circle>
+
+                        <circle r="3" class="pp-flow-particle ">
+                            <animateMotion dur="1.9s" repeatCount="indefinite" path="M 870 742 L 635 742"/>
+                        </circle>
+                    </svg>
+
+
+                    <!-- 1 -->
+                    <div class="pp-node pp-n1">
+                        <div class="pp-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                                <path d="M9 18h6"/>
+                                <path d="M10 22h4"/>
+                                <path d="M8.5 15.5C6.8 14.2 6 12.2 6 10a6 6 0 0 1 12 0c0 2.2-.8 4.2-2.5 5.5-.8.6-1.2 1.1-1.3 2H9.8c-.1-.9-.5-1.4-1.3-2Z"/>
+                            </svg>
+                        </div>
+                        <div class="pp-node-title">1. Idea</div>
+                        <div class="pp-node-subtitle">A problem to solve.<br>Anyone can build an app today.</div>
+                        <div class="pp-node-description">A problem, requirement, or opportunity becomes the starting point of an application.</div>
+                    </div>
+
+
+                    <!-- 2 -->
+                    <div class="pp-node pp-n2">
+                        <div class="pp-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                                <path d="M6 3h9l4 4v14H6z"/>
+                                <path d="M15 3v5h5"/>
+                                <path d="M9 13h6"/>
+                                <path d="M9 17h6"/>
+                            </svg>
+                        </div>
+                        <div class="pp-node-title">2. Plan</div>
+                        <div class="pp-node-subtitle">Define features,<br>choose tools.</div>
+                        <div class="pp-node-description">Features and technologies are selected, often with AI assistance.</div>
+                    </div>
+
+
+                    <!-- 3 -->
+                    <div class="pp-node pp-n3">
+                        <div class="pp-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                                <path d="M8 8l-4 4 4 4"/>
+                                <path d="M16 8l4 4-4 4"/>
+                                <path d="M14 5l-4 14"/>
+                            </svg>
+                        </div>
+                        <div class="pp-node-title">3. Develop</div>
+                        <div class="pp-node-subtitle">Write or generate<br>the code.</div>
+                        <div class="pp-node-description">Application code is written manually, generated by AI, or produced through both.</div>
+                    </div>
+
+
+                    <!-- 4 -->
+                    <div class="pp-patch1">
+                        <div class="pp-stage-label">PATCHPLUS #1 — PRE-DEPLOY</div>
+
+                        <div class="pp-patch1-title">4. PatchPlus</div>
+                        <div class="pp-patch1-subtitle">Understand. Strengthen. Secure.</div>
+
+                        <div class="pp-patch1-list">
+                            <div>Analyze codebase</div>
+                            <div>Find vulnerabilities</div>
+                            <div>Suggest improvements</div>
+                            <div>Add missing modules</div>
+                            <div>Enforce best practices</div>
+                        </div>
+                    </div>
+
+
+                    <!-- 5 -->
+                    <div class="pp-node pp-n5">
+                        <div class="pp-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                                <path d="M9 3h6"/>
+                                <path d="M10 3v6l-5 9a2 2 0 0 0 1.7 3h10.6A2 2 0 0 0 19 18l-5-9V3"/>
+                                <path d="M8 16h8"/>
+                            </svg>
+                        </div>
+                        <div class="pp-node-title">5. Test</div>
+                        <div class="pp-node-subtitle">Functional and<br>security testing.</div>
+                        <div class="pp-node-description">Test functionality, behaviour, and security before release.</div>
+                    </div>
+
+
+                    <!-- 6 -->
+                    <div class="pp-node pp-n6">
+                        <div class="pp-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                                <path d="M5 17v-4a7 7 0 0 1 14 0v4"/>
+                                <path d="M4 17h16"/>
+                                <path d="M12 8v5"/>
+                                <path d="M9 11h6"/>
+                            </svg>
+                        </div>
+                        <div class="pp-node-title">6. Deploy</div>
+                        <div class="pp-node-subtitle">Release to<br>production.</div>
+                        <div class="pp-node-description">Release the application into its production environment.</div>
+                    </div>
+
+
+                    <!-- 7 -->
+                    <div class="pp-node pp-n7">
+                        <div class="pp-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                                <rect x="5" y="4" width="14" height="5" rx="1"/>
+                                <rect x="5" y="10" width="14" height="5" rx="1"/>
+                                <rect x="5" y="16" width="14" height="5" rx="1"/>
+                                <circle cx="8" cy="6.5" r=".7" fill="currentColor"/>
+                                <circle cx="8" cy="12.5" r=".7" fill="currentColor"/>
+                                <circle cx="8" cy="18.5" r=".7" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <div class="pp-node-title">7. Running Application</div>
+                        <div class="pp-node-subtitle">Your app is live<br>and used by real users.</div>
+                        <div class="pp-node-description">The application operates in production, where unexpected behaviour can emerge.</div>
+                    </div>
+
+
+                    <!-- ERROR -->
+                    <div class="pp-error">
+                        <svg class="pp-error-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                            <path d="M12 3l10 18H2L12 3z"/>
+                            <path d="M12 9v5"/>
+                            <circle cx="12" cy="17" r=".7" fill="currentColor"/>
+                        </svg>
+                        <div>
+                            <div class="pp-error-title">Error / Issue Occurs</div>
+                            <div class="pp-error-text">A bug, crash, performance issue or unexpected behaviour.</div>
+                        </div>
+                    </div>
+
+
+                    <!-- 8 + 9 -->
+                    <div class="pp-runtime">
+                        <div class="pp-stage-label">PATCHPLUS #2 — RUNTIME</div>
+
+                        <div class="pp-runtime-title">Detect. Diagnose. Repair.</div>
+
+                        <div class="pp-runtime-subtitle">
+                            PatchPlus monitors your application in production, understands what went wrong, generates a fix, validates it and helps deploy the correction.
+                        </div>
+
+                        <div class="pp-runtime-grid">
+
+                            <div class="pp-runtime-card">
+                                <svg class="pp-runtime-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <circle cx="10.5" cy="10.5" r="6"/>
+                                    <path d="M16 16l5 5"/>
+                                </svg>
+                                <div>
+                                    <div class="pp-runtime-title">8. Detect &amp; Diagnose</div>
+                                    <div class="pp-runtime-text">Identify errors and understand the root cause using code and runtime context.</div>
+                                </div>
+                            </div>
+
+                            <div class="pp-runtime-card">
+                                <svg class="pp-runtime-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M14 6l4-4 4 4-4 4"/>
+                                    <path d="M18 6h-5a7 7 0 0 0-7 7v5"/>
+                                    <path d="M5 18l-3 3 3 3"/>
+                                    <path d="M2 21h7a7 7 0 0 0 7-7"/>
+                                </svg>
+                                <div>
+                                    <div class="pp-runtime-title">9. Generate &amp; Deploy Fix</div>
+                                    <div class="pp-runtime-text">Create a safe, testable fix, validate it and deploy automatically or with approval.</div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
+
+
+                    <div class="pp-flow-footer">
+                        SAME APPLICATION. A SAFER, STRONGER JOURNEY.
+                    </div>
+
+                </div>
+
+            </section>
+
+            <section id="how">
+
+                <h2 class="section-title">
+                    From repository to improvement
+                </h2>
+
+                <p class="section-lead">
+                    PatchPlus is designed as an additional engineering step between development and deployment: understand the application first, then identify and address gaps.
+                </p>
+
+                <div class="flow">
+
+                    <div class="step">
+                        <span class="num">01</span>
+                        <strong>Repository</strong>
+                    </div>
+
+                    <div class="step">
+                        <span class="num">02</span>
+                        <strong>Understand</strong>
+                    </div>
+
+                    <div class="step">
+                        <span class="num">03</span>
+                        <strong>Identify gaps</strong>
+                    </div>
+
+                    <div class="step">
+                        <span class="num">04</span>
+                        <strong>Generate changes</strong>
+                    </div>
+
+                    <div class="step">
+                        <span class="num">05</span>
+                        <strong>Validate</strong>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <section>
+
+                <div class="grid">
+
+                    <div class="card">
+
+                        <div class="icon">⌘</div>
+
+                        <h3>
+                            Repository comprehension
+                        </h3>
+
+                        <p>
+                            Build a structural understanding of files, modules, imports, functions and relationships across an application.
+                        </p>
+
+                    </div>
+
+
+                    <div class="card">
+
+                        <div class="icon">◈</div>
+
+                        <h3>
+                            Gap identification
+                        </h3>
+
+                        <p>
+                            Highlight potential missing security, reliability and operational capabilities based on the application's structure.
+                        </p>
+
+                    </div>
+
+
+                    <div class="card">
+
+                        <div class="icon">✓</div>
+
+                        <h3>
+                            Assisted remediation
+                        </h3>
+
+                        <p>
+                            Generate proposed improvements and move toward validating those changes before the application is deployed.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <section id="privacy">
+
+                <div class="privacy">
+
+                    <h2 class="section-title">
+                        Local-first by design
+                    </h2>
+
+                    <p>
+                        PatchPlus is being designed around a simple principle: a developer's source code should remain under the developer's control. The current product direction is to perform repository analysis locally rather than requiring source code to be uploaded to a
+                        central server.
+                    </p>
+
+                    <p>
+                        <strong>Prototype status:</strong> PatchPlus is currently under development. Features and architecture may evolve as the system is validated with developers.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <section id="contact" class="cta">
+
+                <h2 class="section-title">
+                    Building PatchPlus
+                </h2>
+
+                <p class="section-lead" style="margin-left:auto;margin-right:auto">
+                    We are developing an early prototype and looking to work with developers who want to experiment with repository comprehension and automated software improvement.
+                </p>
+
+                <div class="buttons" style="justify-content:center">
+
+                    <a class="btn primary" href="mailto:hello@patchplus.dev">
+                        Contact us
+                    </a>
+
+                    <a class="btn secondary" href="#">
+                        GitHub — coming soon
+                    </a>
+
+                </div>
+
+            </section>
+
+        </main>
+
+
+        <footer>
+            © 2026 PatchPlus. Early-stage technology project.
+        </footer>
+
+    </div>
+
+</body>
+
+</html>
